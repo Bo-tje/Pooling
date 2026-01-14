@@ -311,6 +311,37 @@
             return null;
         }
 
+                /// <summary>
+        /// Pre-warms the pool with a set number of objects.
+        /// </summary>
+        /// <param name="prefab">The prefab to pool.</param>
+        /// <param name="count">The number of objects to create.</param>
+        /// <param name="poolType">The type of pool.</param>
+        public static void InitializePool(GameObject prefab, int count, PoolType poolType = PoolType.GameObjects)
+        {
+            InitializeIfNeeded();
+
+            if (!_objectPools.ContainsKey(prefab))
+            {
+                CreatePool(prefab, Vector3.zero, Quaternion.identity, poolType);
+            }
+
+            List<GameObject> tempObjects = new List<GameObject>(count);
+
+            // Spawn objects to fill the pool
+            for (int i = 0; i < count; i++)
+            {
+                GameObject obj = _objectPools[prefab].Get();
+                tempObjects.Add(obj);
+            }
+
+            // Return them immediately so they are ready for use
+            foreach (GameObject obj in tempObjects)
+            {
+                _objectPools[prefab].Release(obj);
+            }
+        }
+
         /// <summary>
         /// Spawns an object from the pool using a component reference and sets it as a child of the specified parent.
         /// </summary>
