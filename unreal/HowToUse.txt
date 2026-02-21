@@ -1,0 +1,5 @@
+Class: WorldSubSystem
+
+You will find nodes for Spawn Object, Return Object To Pool, and Initialize Pool under the "Pooling" category.
+
+(Note: Make sure to change POOLING_API in the header to your actual project's API macro if it's different!)
