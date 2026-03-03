@@ -37,7 +37,7 @@ struct FActorPool
  * This is the Unreal equivalent of the Unity ObjectPooler script.
  */
 UCLASS()
-class POOLING_API UUnrealObjectPooler : public UWorldSubsystem
+class OBJECTPOOLER_API UUnrealObjectPooler : public UWorldSubsystem
 {
 	GENERATED_BODY()
 

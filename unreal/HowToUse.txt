@@ -1,5 +1,44 @@
-Class: WorldSubSystem
+# ObjectPooler Unreal Engine Plugin
 
-You will find nodes for Spawn Object, Return Object To Pool, and Initialize Pool under the "Pooling" category.
+This is a simple and efficient object pooling subsystem for Unreal Engine.
 
-(Note: Make sure to change POOLING_API in the header to your actual project's API macro if it's different!)
+## Installation
+1. Copy the `ObjectPooler` folder into your project's `Plugins` directory.
+2. Restart Unreal Engine.
+3. Enable the plugin in the Plugins menu if it's not already enabled.
+
+## Usage
+The `UUnrealObjectPooler` is a `WorldSubsystem`, which means it is automatically created for every world and can be accessed from anywhere.
+
+### Blueprint
+You will find the following nodes under the **Pooling** category:
+- **Spawn Object**: Spawns (or retrieves from pool) an actor of the specified class.
+- **Return Object To Pool**: Returns an actor to its corresponding pool and deactivates it.
+- **Initialize Pool**: Pre-warms a pool by creating a specified number of actors.
+
+### C++
+Include the header:
+```cpp
+#include "UnrealObjectPooler.h"
+```
+
+Get the subsystem:
+```cpp
+UUnrealObjectPooler* Pooler = UUnrealObjectPooler::Get(this);
+```
+
+Spawn an object:
+```cpp
+AMyActor* MyActor = Pooler->SpawnObject<AMyActor>(MyActorClass, Location, Rotation, EPoolType::GameObjects);
+```
+
+Return to pool:
+```cpp
+Pooler->ReturnObjectToPool(MyActor);
+```
+
+## Features
+- **WorldSubsystem**: No need to place an actor in the scene.
+- **Root Management**: Automatically organizes pooled objects under a root actor in the World Outliner.
+- **Recursive Activation**: Automatically handles activation/deactivation of actor components (collisions, ticks, etc.).
+- **Easy Integration**: Works with both C++ and Blueprints.
